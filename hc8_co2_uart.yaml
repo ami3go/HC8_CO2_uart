@@ -1,0 +1,24 @@
+esphome:
+  name: hc8_co2_sensor
+  platform: ESP32
+  board: esp32dev
+
+# Include the external component
+external_components:
+  - source:
+      type: local
+      path: "./hc8_co2_sensor"  # Path to the external component folder
+
+# UART configuration
+uart:
+  tx_pin: GPIO17
+  rx_pin: GPIO16
+  baud_rate: 9600
+
+# HC8 CO2 Sensor configuration
+sensor:
+  - platform: hc8_co2_sensor
+    name: "CO2 Concentration"
+    unit_of_measurement: "ppm"
+    accuracy_decimals: 0
+    icon: "mdi:molecule-co2"

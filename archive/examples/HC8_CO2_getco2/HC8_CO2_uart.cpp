@@ -161,3 +161,4 @@ boolean HC8_CO2_uart::isWarming()
 	delay(10 * 1000);
 	return true;
 }
+

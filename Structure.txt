@@ -1,0 +1,7 @@
+project_folder/
+│
+├── hc8_co2_uart/
+│   ├── hc8_co2_uart.h
+│   ├── hc8_co2_uart.cpp
+│
+└── hc8_co2_sensor.yaml
