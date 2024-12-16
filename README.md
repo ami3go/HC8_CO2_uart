@@ -65,15 +65,24 @@ License MIT
   get temperature (MH-Z19 hidden function?  this function is not support.)
 
 # link
-* MH-Z19 Data sheet  
-  http://www.winsen-sensor.com/d/files/PDF/Infrared%20Gas%20Sensor/NDIR%20CO2%20SENSOR/MH-Z19%20CO2%20Ver1.0.pdf
+# there is no much information about it, but here is what is already known 
+* hackaday.com
+   
+    https://hackaday.com/2022/08/31/mh-z19-like-ndir-co2-sensor-hc8-found-and-explored/
 
-* MH-Z19B Data sheet  
-  http://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf
+* spezifisch.codeberg.page
+   
+  https://spezifisch.codeberg.page/posts/2022-08-23/co2-sensor-reverse-engineering/
 
-* MH-Z19C Data sheet  
-  https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19c-pins-type-co2-manual-ver1_0.pdf
+* reddit.com
+  
+  https://www.reddit.com/r/hackaday/comments/x2ohlu/mhz19like_ndir_co2_sensor_hc8_found_and_explored/
 
+* github
+  
+  https://github.com/esphome/feature-requests/issues/2550
+
+  
 # history
 * ver. 0.1: closed version.
 * ver. 0.2: first release version.
