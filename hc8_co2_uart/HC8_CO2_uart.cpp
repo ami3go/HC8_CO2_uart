@@ -8,6 +8,17 @@ void HC8CO2UART::setup() {
 }
 
 void HC8CO2UART::update() {
+/**
+https://hackaday.com/2022/08/31/mh-z19-like-ndir-co2-sensor-hc8-found-and-explored/
+The output format is 16BYTE.
+Data header: BYTE0 = 0X42; BYTE1=4D
+BYTE6 data is high, BYTE7 data is low, indicating CO2 concentration.
+BYTE15, data checksum. BYTE15= BYTE0+BYTE1+…….+BYTE13;
+
+Example: 42 4D 0C 51 09 A2 07 2B 01 35 05 81 20 08 20 AD;
+CO2 concentration = BYTE6 X 256 + BYTE7 = 07X256 + 2B = 1853;
+**/	
+	
   ESP_LOGD(TAG, "Reading CO2 concentration...");
   uint8_t command[9] = {0xFF, 0x01, 0x86, 0x00, 0x00, 0x00, 0x00, 0x00, 0x79};
   this->write_array(command, sizeof(command));
