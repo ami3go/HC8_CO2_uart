@@ -1,6 +1,7 @@
-# MHZ19_uart 
-Arduino IDE library for operating the MH-Z19 CO2 sensor in ESP-WROOM-02/32(ESP8266/ESP32) or Arduino  
-version 0.31
+# HC8_CO2
+Fork from  MH-Z19 https://github.com/nara256/mhz19_uart and work for get HC8 CO2 senspor supported by ESPHOME
+Status: 
+16.12.24 - forked project. 
 
 # Credits and license  
 License MIT
@@ -8,6 +9,7 @@ License MIT
 # How to use
 
 * Include this library to your Arduino IDE.
+* HC8 is pin to pin compatible, but protocol is different. 
 * Wiring MH-Z19 sensor to your Arduino or ESP-WROOM-02/32(ESP8266/ESP32).
 
     MH-Z19 Vout to Arduino Vout(5V)  
