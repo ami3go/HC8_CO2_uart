@@ -2,12 +2,12 @@
     MH-Z19 CO2 sensor  SAMPLE
   ----------------------------------------------------------*/
 
-#include <MHZ19_uart.h>
+#include "../../src/HC8_CO2_uart.h"
 
 const int rx_pin = 16; //Serial rx pin no
 const int tx_pin = 17; //Serial tx pin no
 
-MHZ19_uart mhz19;
+HC8_CO2_uart hc8_co2;
 
 /*----------------------------------------------------------
     MH-Z19 CO2 sensor  setup
@@ -15,8 +15,8 @@ MHZ19_uart mhz19;
 void setup()
 {
   Serial.begin(9600);
-  mhz19.begin(rx_pin, tx_pin);
-  mhz19.setAutoCalibration(false);
+  hc8_co2.begin(rx_pin, tx_pin);
+  hc8_co2.setAutoCalibration(false);
 
   Serial.println("MH-Z19 is warming up now.");
   delay(10 * 1000); //
@@ -27,8 +27,8 @@ void setup()
   ----------------------------------------------------------*/
 void loop()
 {
-  int co2ppm = mhz19.getCO2PPM();
-  int temp = mhz19.getTemperature();
+  int co2ppm = hc8_co2.getCO2PPM();
+  int temp = hc8_co2.getTemperature();
 
   Serial.print("co2: ");
   Serial.println(co2ppm);
