@@ -1,12 +1,12 @@
 /*
-  MHZ19_uart.h - MH-Z19 CO2 sensor library for ESP-WROOM-02/32(ESP8266/ESP32) or Arduino
+  HC8_CO2_uart.h - MH-Z19 CO2 sensor library for ESP-WROOM-02/32(ESP8266/ESP32) or Arduino
   version 0.3
   
   License MIT
 */
 
-#ifndef MHZ19_uart_h_
-#define MHZ19_uart_h_
+#ifndef HC8_CO2_uart_h_
+#define HC8_CO2_uart_h_
 
 #include "Arduino.h"
 #ifdef ARDUINO_ARCH_ESP32
@@ -18,9 +18,9 @@
 class MHZ19_uart
 {
 public:
-	MHZ19_uart();
-	MHZ19_uart(int rx, int tx);
-	virtual ~MHZ19_uart();
+	HC8_CO2_uart();
+	HC8_CO2_uart(int rx, int tx);
+	virtual ~HC8_CO2_uart();
 
 	void begin(int rx = -1, int tx = -1);
 	void setAutoCalibration(boolean autocalib);
@@ -45,7 +45,7 @@ protected:
 	void writeCommand(uint8_t com[], uint8_t response[]);
 
 private:
-	uint8_t mhz19_checksum(uint8_t com[]);
+	uint8_t hc8_co2_checksum(uint8_t com[]);
 	void readSerialData();
 
 	static const int REQUEST_CNT = 8;
