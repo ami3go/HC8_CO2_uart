@@ -57,3 +57,6 @@ bool HC8CO2UART::validate_checksum_(const uint8_t *data) {
 
 }  // namespace hc8_co2_uart
 }  // namespace esphome
+
+
+
