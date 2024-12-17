@@ -2,7 +2,7 @@
 Fork from  MH-Z19 https://github.com/nara256/mhz19_uart and work for get HC8 CO2 senspor supported by ESPHOME
 
 Status: 
-
+17.12.24 - added Datasheet. Rebase code to follow ESPhome tamplate 
 16.12.24 - forked project. 
 
 # Credits and license  
