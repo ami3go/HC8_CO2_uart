@@ -1,62 +1,43 @@
 #include "hc8_co2_uart.h"
 
-namespace esphome {
-namespace hc8_co2_uart {
-
-void HC8CO2UART::setup() {
-  ESP_LOGCONFIG(TAG, "Setting up HC8 CO2 UART...");
+void HC8CO2Sensor::setup() {
+  this->status_text->publish_state("Initializing...");
 }
 
-void HC8CO2UART::update() {
-/**
-https://hackaday.com/2022/08/31/mh-z19-like-ndir-co2-sensor-hc8-found-and-explored/
-The output format is 16BYTE.
-Data header: BYTE0 = 0X42; BYTE1=4D
-BYTE6 data is high, BYTE7 data is low, indicating CO2 concentration.
-BYTE15, data checksum. BYTE15= BYTE0+BYTE1+…….+BYTE13;
+void HC8CO2Sensor::update() {
+  static const uint8_t QUERY_CMD[] = {0x64, 0x69, 0x03, 0x5E, 0x4E};
+  uint8_t response[14];
 
-Example: 42 4D 0C 51 09 A2 07 2B 01 35 05 81 20 08 20 AD;
-CO2 concentration = BYTE6 X 256 + BYTE7 = 07X256 + 2B = 1853;
-**/	
-	
-  ESP_LOGD(TAG, "Reading CO2 concentration...");
-  uint8_t command[9] = {0xFF, 0x01, 0x86, 0x00, 0x00, 0x00, 0x00, 0x00, 0x79};
-  this->write_array(command, sizeof(command));
-  delay(10);
+  this->write_array(QUERY_CMD, sizeof(QUERY_CMD));
+  delay(100);  // Use non-blocking methods in final implementation
 
-  uint8_t response[9];
-  if (this->available() >= 9) {
-    this->read_array(response, sizeof(response));
-    if (validate_checksum_(response)) {
-      uint16_t co2 = (response[2] << 8) | response[3];
-      ESP_LOGD(TAG, "CO2 Concentration: %d ppm", co2);
-      if (this->co2_sensor_ != nullptr) {
-        this->co2_sensor_->publish_state(co2);
+  if (this->available() >= 14) {
+    this->read_array(response, 14);
+
+    if (response[0] == 0x64 && response[1] == 0x69) {
+      uint16_t checksum = calculate_checksum(response, 12);
+      uint16_t received_checksum = (response[13] << 8) | response[12];
+
+      if (checksum == received_checksum) {
+        uint16_t co2_ppm = (response[4] << 8) | response[5];
+        this->co2_sensor->publish_state(co2_ppm);
+        this->status_text->publish_state("Measurement OK");
+      } else {
+        this->status_text->publish_state("Checksum Error");
       }
     } else {
-      ESP_LOGW(TAG, "Checksum validation failed for HC8 sensor data.");
+      this->status_text->publish_state("Invalid Response");
     }
   } else {
-    ESP_LOGW(TAG, "No valid data received from HC8 sensor.");
+    this->status_text->publish_state("No Response");
   }
 }
 
-void HC8CO2UART::dump_config() {
-  ESP_LOGCONFIG(TAG, "HC8 CO2 UART:");
-  LOG_SENSOR("  ", "CO2 Concentration", this->co2_sensor_);
-}
-
-bool HC8CO2UART::validate_checksum_(const uint8_t *data) {
-  uint8_t checksum = 0;
-  for (int i = 1; i < 8; i++) {
+uint16_t HC8CO2Sensor::calculate_checksum(const uint8_t *data, size_t length) {
+  uint16_t checksum = 0;
+  for (size_t i = 0; i < length; i++) {
     checksum += data[i];
   }
-  checksum = 0xFF - checksum + 1;
-  return checksum == data[8];
+  return checksum;
 }
-
-}  // namespace hc8_co2_uart
-}  // namespace esphome
-
-
 

@@ -1,0 +1,15 @@
+# Configuration options for the HC8 CO2 UART sensor
+name: HC8_CO2_UART
+description: ESPHome component for HC8 CO2 sensor over UART
+fields:
+  - name: rx_pin
+    description: UART RX pin connected to the HC8 sensor
+    required: true
+  - name: tx_pin
+    description: UART TX pin connected to the HC8 sensor
+    required: true
+  - name: update_interval
+    description: Time between sensor readings
+    required: false
+    default: 60s
+
