@@ -4,21 +4,10 @@ esphome:
   board: esp32dev
 
 # Include the external component
-# example for local 
 external_components:
   - source:
       type: local
       path: "./hc8_co2_sensor"  # Path to the external component folder
-
-external_components:
-  - source:
-      type: git
-      url: https://github.com/ami3go/HC8_CO2_uart
-      ref: master
-    components:
-      - hc8_co2_uart
-
-
 
 # UART configuration
 uart:
